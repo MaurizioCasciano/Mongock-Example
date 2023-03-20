@@ -1,0 +1,18 @@
+{
+  "id": "Questionnaire-B",
+  "name": "Questionnaire-B",
+  "description": "Questionnaire to assess...",
+  "type": "B",
+  "questions": [
+    "B-Question-0000",
+    "B-Question-0001",
+    "B-Question-0002",
+    "B-Question-0003",
+    "B-Question-0004",
+    "B-Question-0005",
+    "B-Question-0006",
+    "B-Question-0007",
+    "B-Question-0008",
+    "B-Question-0009"
+  ]
+}
