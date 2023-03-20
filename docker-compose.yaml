@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  mongock-example-db:
+    image: "mongo:6.0.5"
+    container_name: "mongock-example-db"
+    environment:
+      MONGODB_HOST: "${MONGODB_HOST:-localhost}"
+      MONGODB_PORT: "${MONGODB_PORT:-27018}"
+      MONGO_INITDB_DATABASE: "${MONGODB_DATABASE:-mongock-example}"
+      MONGO_REPLICA_SET_NAME: "${MONGO_REPLICA_SET_NAME:-rs0}"
+    volumes:
+      - "mongock-example-db-data:/data/db"
+    restart: "always"
+    ports:
+      - "${MONGODB_PORT:-27018}:${MONGODB_PORT:-27018}"
+    healthcheck:
+      test: "test $$(mongosh $MONGODB_HOST:$MONGODB_PORT --quiet --eval 'rs.status().ok') -eq 1 || \
+             test $$(mongosh $MONGODB_HOST:$MONGODB_PORT --quiet --eval 'rs.initiate().ok') -eq 1"
+      interval: 10s
+      start_period: 30s
+    command: "mongod --bind_ip_all --port ${MONGODB_PORT:-27018} --replSet ${MONGO_REPLICA_SET_NAME:-rs0} --noauth"
+
+volumes:
+  mongock-example-db-data:
+    name: "mongock-example-db-data"
